@@ -1,8 +1,11 @@
-import "./App.css";
-import { Text } from "react-native";
+import CredentialCard from "./components/CredentialCard";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <CredentialCard />
+    </div>
+  );
 }
 
 export default App;
