@@ -72,9 +72,11 @@ function computedStyles(overlay?: OverlayBundle) {
 
 function IssuerName({
   overlay,
+  language,
   styles,
 }: {
   overlay?: OverlayBundle;
+  language?: string;
   styles?: any;
 }) {
   return (
@@ -91,8 +93,7 @@ function IssuerName({
           },
         ]}
       >
-        {/* {overlay?.metadata?.issuer} */}
-        {overlay?.metadata?.issuer?.["en-CA"]}
+        {overlay?.metadata?.issuer?.[language ?? "en"]}
       </Text>
     </View>
   );
@@ -100,9 +101,11 @@ function IssuerName({
 
 function CredentialName({
   overlay,
+  language,
   styles,
 }: {
   overlay?: OverlayBundle;
+  language?: string;
   styles?: any;
 }) {
   return (
@@ -120,8 +123,7 @@ function CredentialName({
             },
           ]}
         >
-          {/* {overlay?.metadata?.name} */}
-          {overlay?.metadata?.name["en-CA"]}
+          {overlay?.metadata?.name[language ?? "en"]}
         </Text>
       </View>
     </View>
@@ -190,15 +192,17 @@ function CardLogo({
 
 function CardPrimaryBody({
   overlay,
+  language,
   styles,
 }: {
   overlay?: OverlayBundle;
+  language?: string;
   styles?: any;
 }) {
   return (
     <View style={styles.primaryBodyContainer}>
-      <IssuerName overlay={overlay} styles={styles} />
-      <CredentialName overlay={overlay} styles={styles} />
+      <IssuerName overlay={overlay} language={language} styles={styles} />
+      <CredentialName overlay={overlay} language={language} styles={styles} />
       {/* <FlatList
           data={[...(displayItems ?? []), primaryField, secondaryField]}
           scrollEnabled={false}
@@ -220,27 +224,38 @@ function CardStatus({
   return <View style={[styles.statusContainer]} />;
 }
 
-function Card({ overlay, styles }: { overlay?: OverlayBundle; styles?: any }) {
+function Card({
+  overlay,
+  language,
+  styles,
+}: {
+  overlay?: OverlayBundle;
+  language?: string;
+  styles?: any;
+}) {
   return (
     <View style={styles.cardContainer}>
       <CardSecondaryBody overlay={overlay} styles={styles} />
       <CardLogo overlay={overlay} styles={styles} />
-      <CardPrimaryBody overlay={overlay} styles={styles} />
+      <CardPrimaryBody overlay={overlay} language={language} styles={styles} />
       <CardStatus overlay={overlay} styles={styles} />
     </View>
   );
 }
 
-function CredentialCard10({ overlay }: { overlay?: OverlayBundle }) {
+function CredentialCard10({
+  overlay,
+  language,
+}: {
+  overlay?: OverlayBundle;
+  language?: string;
+}) {
   const styles = computedStyles(overlay);
 
   return (
-    <>
-      <Text>This is a credential card with branding version 1.1</Text>
-      <View style={[styles.container, { width }]}>
-        <Card overlay={overlay} styles={styles} />
-      </View>
-    </>
+    <View style={[styles.container, { width }]}>
+      <Card overlay={overlay} language={language} styles={styles} />
+    </View>
   );
 }
 

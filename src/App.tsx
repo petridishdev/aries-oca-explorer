@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import CredentialCard from "./components/CredentialCard";
 import Form from "./components/Form";
+import OverlayForm from "./components/OverlayForm";
 import OverlayBundle from "./services/OverlayBundle";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <Form onOverlay={handleOverlay} />
-      {overlay && <CredentialCard overlay={overlay} />}
+      {overlay && <OverlayForm overlay={overlay} />}
     </div>
   );
 }

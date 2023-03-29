@@ -1,8 +1,14 @@
 import OverlayBundle from "../services/OverlayBundle";
 import CredentialCard10 from "./CredentialCard10";
 
-function CredentialCard({ overlay }: { overlay?: OverlayBundle }) {
-  return <CredentialCard10 overlay={overlay} />;
+function CredentialCard({
+  overlay,
+  language,
+}: {
+  overlay?: OverlayBundle;
+  language?: string;
+}) {
+  return <CredentialCard10 overlay={overlay} language={language} />;
 }
 
 export default CredentialCard;
