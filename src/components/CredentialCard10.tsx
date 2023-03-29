@@ -2,7 +2,7 @@ import { Text, View, Image, ImageBackground } from "react-native";
 import OverlayBundle from "../types/overlay/OverlayBundle";
 import { textColorForBackground } from "../utils/color";
 
-const width = 375;
+const width = 360;
 const borderRadius = 10;
 const padding = width * 0.05;
 const logoHeight = width * 0.12;

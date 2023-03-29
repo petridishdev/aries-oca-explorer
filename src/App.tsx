@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Form from "./components/Form";
 import OverlayForm from "./components/OverlayForm";
@@ -12,8 +13,10 @@ function App() {
 
   return (
     <div className="App">
-      <Form onOverlay={handleOverlay} />
-      {overlay && <OverlayForm overlay={overlay} />}
+      <Container>
+        <Form onOverlay={handleOverlay} />
+        {overlay && <OverlayForm overlay={overlay} />}
+      </Container>
     </div>
   );
 }
