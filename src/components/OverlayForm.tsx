@@ -6,7 +6,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import OverlayBundle from "../services/OverlayBundle";
+import OverlayBundle from "../types/overlay/OverlayBundle";
 import CredentialCard from "./CredentialCard";
 
 function OverlayForm({ overlay }: { overlay?: OverlayBundle }) {

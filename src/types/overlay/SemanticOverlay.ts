@@ -6,7 +6,7 @@ import {
     ILabelOverlayData,
     IMetaOverlayData,
     IStandardOverlayData,
-} from "./SemanticOverlay.interface";
+} from "../../interfaces/overlay/SemanticOverlay.interface";
 
 export class CharacterEncodingOverlay extends Overlay {
     #default_character_encoding: string;

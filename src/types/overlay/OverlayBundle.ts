@@ -1,7 +1,7 @@
 import { BrandingOverlay } from "./BrandingOverlay";
-import { IBrandingOverlayData } from "./BrandingOverlayData.interface";
+import { IBrandingOverlayData } from "../../interfaces/overlay/BrandingOverlayData.interface";
 import { CaptureBase, Overlay } from "./Overlay";
-import { IOverlayBundleData } from "./OverlayBundleData.interface";
+import { IOverlayBundleData } from "../../interfaces/overlay/OverlayBundleData.interface";
 import { OverlayType } from "./OverlayType";
 import {
     FormatOverlay,

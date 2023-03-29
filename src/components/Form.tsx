@@ -6,7 +6,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import OverlayBundle from "../services/OverlayBundle";
+import OverlayBundle from "../types/overlay/OverlayBundle";
 import OverlayBundleFactory from "../services/OverlayBundleFactory";
 
 const urlMap = new Map(

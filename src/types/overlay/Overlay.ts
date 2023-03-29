@@ -1,4 +1,4 @@
-import { ICaptureBaseData, IOverlayData } from "./OverlayData.interface";
+import { ICaptureBaseData, IOverlayData } from "../../interfaces/overlay/OverlayData.interface";
 
 export class CaptureBase {
     #flagged_attributes: string[];

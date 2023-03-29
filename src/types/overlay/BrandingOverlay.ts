@@ -1,5 +1,5 @@
-import { generateColor } from "../utils/color";
-import { IBrandingOverlayData } from "./BrandingOverlayData.interface";
+import { generateColor } from "../../utils/color";
+import { IBrandingOverlayData } from "../../interfaces/overlay/BrandingOverlayData.interface";
 import { Overlay } from "./Overlay";
 
 export class BrandingOverlay extends Overlay {

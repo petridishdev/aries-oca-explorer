@@ -1,4 +1,4 @@
-import OverlayBundle from "../services/OverlayBundle";
+import OverlayBundle from "../types/overlay/OverlayBundle";
 import CredentialCard10 from "./CredentialCard10";
 
 function CredentialCard({

@@ -1,5 +1,5 @@
-import OverlayBundle from './OverlayBundle';
-import { IOverlayBundleData } from './OverlayBundleData.interface';
+import OverlayBundle from '../types/overlay/OverlayBundle';
+import { IOverlayBundleData } from '../interfaces/overlay/OverlayBundleData.interface';
 
 class OverlayBundleFactory {
     public static async fetchOverlayBundle(credentialDefinitionId: string, url: string): Promise<OverlayBundle> {

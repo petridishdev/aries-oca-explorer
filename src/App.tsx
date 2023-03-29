@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Form from "./components/Form";
 import OverlayForm from "./components/OverlayForm";
-import OverlayBundle from "./services/OverlayBundle";
+import OverlayBundle from "./types/overlay/OverlayBundle";
 
 function App() {
   const [overlay, setOverlay] = useState<OverlayBundle | undefined>(undefined);
