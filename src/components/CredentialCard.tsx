@@ -1,12 +1,8 @@
-import { Text } from "react-native";
-import CredentialCard11 from "./CredentialCard11";
+import OverlayBundle from "../services/OverlayBundle";
+import CredentialCard10 from "./CredentialCard10";
 
-function CredentialCard() {
-  return (
-    <>
-      <CredentialCard11 />
-    </>
-  );
+function CredentialCard({ overlay }: { overlay?: OverlayBundle }) {
+  return <CredentialCard10 overlay={overlay} />;
 }
 
 export default CredentialCard;
