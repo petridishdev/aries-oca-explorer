@@ -87,6 +87,10 @@ class OverlayBundle {
         )[0];
     }
 
+    displayAttribute(attributeName: string): OverlayAttribute | undefined {
+        return this.attributes.find((attribute) => attribute.name === attributeName);
+    }
+
     private processMetadata(): OverlayMetadata {
         const metadata: OverlayMetadata = {
             name: {},

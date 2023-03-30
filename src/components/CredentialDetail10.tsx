@@ -42,10 +42,13 @@ function computedStyles(overlay?: OverlayBundle) {
       ),
       flexShrink: 1,
     },
-
     label: {
       fontSize: 14,
       fontWeight: "bold",
+    },
+    labelSubtitle: {
+      fontSize: 14,
+      fontWeight: "normal",
     },
     normal: {
       fontSize: 18,

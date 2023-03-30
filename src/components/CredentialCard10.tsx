@@ -1,6 +1,7 @@
-import { Text, View, Image, ImageBackground } from "react-native";
+import { Text, View, Image, ImageBackground, FlatList } from "react-native";
 import OverlayBundle from "../types/overlay/OverlayBundle";
 import { textColorForBackground } from "../utils/color";
+import startCase from "lodash.startcase";
 
 const width = 360;
 const borderRadius = 10;
@@ -59,9 +60,16 @@ function computedStyles(overlay?: OverlayBundle) {
       ),
       flexShrink: 1,
     },
+    attributeContainer: {
+      marginTop: 15,
+    },
     label: {
       fontSize: 14,
       fontWeight: "bold",
+    },
+    labelSubtitle: {
+      fontSize: 14,
+      fontWeight: "normal",
     },
     normal: {
       fontSize: 18,
@@ -126,6 +134,62 @@ function CredentialName({
           {overlay?.metadata?.name[language ?? "en"]}
         </Text>
       </View>
+    </View>
+  );
+}
+
+function AttributeLabel({ label, styles }: { label: string; styles?: any }) {
+  return (
+    <Text
+      style={[
+        styles.labelSubtitle,
+        styles.textContainer,
+        {
+          lineHeight: 19,
+          opacity: 0.8,
+        },
+      ]}
+    >
+      {label}
+    </Text>
+  );
+}
+
+function AttributeValue({ value, styles }: { value?: string; styles?: any }) {
+  return (
+    <Text
+      style={[
+        styles.normal,
+        styles.textContainer,
+        {
+          lineHeight: 24,
+        },
+      ]}
+    >
+      {value}
+    </Text>
+  );
+}
+
+function Attribute({
+  overlay,
+  language,
+  attribute,
+  styles,
+}: {
+  overlay?: OverlayBundle;
+  language?: string;
+  attribute: string;
+  styles?: any;
+}) {
+  const label =
+    overlay?.displayAttribute(attribute)?.label?.[language ?? "en"] ??
+    startCase(attribute);
+
+  return (
+    <View style={[styles.textContainer, styles.attributeContainer]}>
+      <AttributeLabel label={label} styles={styles}></AttributeLabel>
+      <AttributeValue value={"•".repeat(10)} styles={styles} />
     </View>
   );
 }
@@ -199,17 +263,28 @@ function CardPrimaryBody({
   language?: string;
   styles?: any;
 }) {
+  const displayAttributes = [];
+  const { primaryAttribute, secondaryAttribute } = overlay?.branding ?? {};
+  if (primaryAttribute) {
+    displayAttributes.push(primaryAttribute);
+  }
+  if (secondaryAttribute) {
+    displayAttributes.push(secondaryAttribute);
+  }
+
   return (
     <View style={styles.primaryBodyContainer}>
       <IssuerName overlay={overlay} language={language} styles={styles} />
       <CredentialName overlay={overlay} language={language} styles={styles} />
-      {/* <FlatList
-          data={[...(displayItems ?? []), primaryField, secondaryField]}
-          scrollEnabled={false}
-          renderItem={({ item }) => {
-            return renderCardAttribute(item as Attribute & Predicate);
-          }}
-        /> */}
+      {displayAttributes.map((attribute) => (
+        <Attribute
+          key={attribute}
+          overlay={overlay}
+          language={language}
+          attribute={attribute}
+          styles={styles}
+        />
+      ))}
     </View>
   );
 }
