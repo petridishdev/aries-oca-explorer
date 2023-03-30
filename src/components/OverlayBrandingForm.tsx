@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, Select, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { MuiColorInput } from "mui-color-input";
 import { useEffect } from "react";
 import {
@@ -117,8 +123,7 @@ function OverlayBrandingForm({
         <Select
           labelId="primary-attribute"
           label="Primary Attribute"
-          value=""
-          //   value={overlay?.branding?.primaryAttribute ?? ""}
+          value={branding?.primaryAttribute ?? ""}
           onChange={(e) => {
             dispatch &&
               dispatch({
@@ -126,15 +131,22 @@ function OverlayBrandingForm({
                 payload: { primaryAttribute: e.target.value },
               });
           }}
-        ></Select>
+        >
+          {Object.entries(overlay?.captureBase?.attributes || {}).map(
+            ([key]) => (
+              <MenuItem key={key} value={key}>
+                {key}
+              </MenuItem>
+            )
+          )}
+        </Select>
       </FormControl>
       <FormControl fullWidth margin="dense" size="small">
         <InputLabel id="secondary-attribute">Secondary Attribute</InputLabel>
         <Select
           labelId="secondary-attribute"
           label="Secondary Attribute"
-          value=""
-          //   value={overlay?.branding?.secondaryAttribute ?? ""}
+          value={branding?.secondaryAttribute ?? ""}
           onChange={(e) => {
             dispatch &&
               dispatch({
@@ -142,7 +154,15 @@ function OverlayBrandingForm({
                 payload: { secondaryAttribute: e.target.value },
               });
           }}
-        ></Select>
+        >
+          {Object.entries(overlay?.captureBase?.attributes || {}).map(
+            ([key]) => (
+              <MenuItem key={key} value={key}>
+                {key}
+              </MenuItem>
+            )
+          )}
+        </Select>
       </FormControl>
     </div>
   );

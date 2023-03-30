@@ -290,9 +290,9 @@ function CardPrimaryBody({
     <View style={styles.primaryBodyContainer}>
       <IssuerName overlay={overlay} language={language} styles={styles} />
       <CredentialName overlay={overlay} language={language} styles={styles} />
-      {displayAttributes.map((attribute) => (
+      {displayAttributes.map((attribute, index) => (
         <Attribute
-          key={attribute}
+          key={`${attribute}_${index}}`}
           overlay={overlay}
           language={language}
           attribute={attribute}
