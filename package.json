@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.14",
     "lodash.startcase": "^4.4.0",
+    "mui-color-input": "^1.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native-web": "^0.18.12"

@@ -38,7 +38,7 @@ function Form({ onOverlay }: { onOverlay: (bundle: OverlayBundle) => void }) {
   }, []);
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth margin="normal">
       <InputLabel id="overlay-bundle-id-label">Bundle ID</InputLabel>
       <Select
         labelId="overlay-bundle-id-label"
