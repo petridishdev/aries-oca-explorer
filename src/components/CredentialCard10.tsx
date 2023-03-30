@@ -2,17 +2,20 @@ import { Text, View, Image, ImageBackground, FlatList } from "react-native";
 import OverlayBundle from "../types/overlay/OverlayBundle";
 import { textColorForBackground } from "../utils/color";
 import startCase from "lodash.startcase";
+import { useBranding } from "../contexts/Branding";
 
 const width = 360;
 const borderRadius = 10;
 const padding = width * 0.05;
 const logoHeight = width * 0.12;
 
-function computedStyles(overlay?: OverlayBundle) {
+function computedStyles() {
+  const branding = useBranding();
+
   return {
     container: {
       backgroundColor:
-        overlay?.branding?.primaryBackgroundColor ?? "rgba(0, 0, 0, 0.24)",
+        branding?.primaryBackgroundColor ?? "rgba(0, 0, 0, 0.24)",
       borderRadius: borderRadius,
     },
     cardContainer: {
@@ -30,10 +33,9 @@ function computedStyles(overlay?: OverlayBundle) {
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
       backgroundColor:
-        (overlay?.branding?.backgroundImageSlice
+        (branding?.backgroundImageSlice
           ? "rgba(0, 0, 0, 0)"
-          : overlay?.branding?.secondaryBackgroundColor) ??
-        "rgba(0, 0, 0, 0.24)",
+          : branding?.secondaryBackgroundColor) ?? "rgba(0, 0, 0, 0.24)",
     },
     logoContainer: {
       top: padding,
@@ -56,7 +58,7 @@ function computedStyles(overlay?: OverlayBundle) {
     },
     textContainer: {
       color: textColorForBackground(
-        overlay?.branding?.primaryBackgroundColor ?? "#000000"
+        branding?.primaryBackgroundColor ?? "#000000"
       ),
       flexShrink: 1,
     },
@@ -195,42 +197,45 @@ function Attribute({
 }
 
 function CardSecondaryBody({
-  overlay,
   styles,
 }: {
   overlay?: OverlayBundle;
   styles?: any;
 }) {
+  const branding = useBranding();
+
   return (
     <View style={[styles.secondaryBodyContainer]}>
-      {overlay?.branding?.backgroundImageSlice && (
+      {branding?.backgroundImageSlice ? (
         <ImageBackground
-          source={overlay?.branding?.backgroundImageSlice}
+          source={branding?.backgroundImageSlice}
           style={{ flexGrow: 1 }}
           imageStyle={{
             borderTopLeftRadius: borderRadius,
             borderBottomLeftRadius: borderRadius,
           }}
-        >
-          {null}
-        </ImageBackground>
-      )}
+        />
+      ) : null}
     </View>
   );
 }
 
 function CardLogo({
   overlay,
+  language,
   styles,
 }: {
   overlay?: OverlayBundle;
+  language?: string;
   styles?: any;
 }) {
+  const branding = useBranding();
+
   return (
     <View style={[styles.logoContainer]}>
-      {overlay?.branding?.logo ? (
+      {branding?.logo ? (
         <Image
-          source={overlay?.branding?.logo}
+          source={branding?.logo}
           style={{
             resizeMode: "cover",
             width: logoHeight,
@@ -248,7 +253,15 @@ function CardLogo({
               alignSelf: "center",
             },
           ]}
-        ></Text>
+        >
+          {(
+            overlay?.metadata?.issuer?.[language ?? "en"] ??
+            overlay?.metadata?.name?.[language || "en"] ??
+            "C"
+          )
+            ?.charAt(0)
+            .toUpperCase()}
+        </Text>
       )}
     </View>
   );
@@ -263,8 +276,9 @@ function CardPrimaryBody({
   language?: string;
   styles?: any;
 }) {
+  const branding = useBranding();
   const displayAttributes = [];
-  const { primaryAttribute, secondaryAttribute } = overlay?.branding ?? {};
+  const { primaryAttribute, secondaryAttribute } = branding ?? {};
   if (primaryAttribute) {
     displayAttributes.push(primaryAttribute);
   }
@@ -310,8 +324,8 @@ function Card({
 }) {
   return (
     <View style={styles.cardContainer}>
-      <CardSecondaryBody overlay={overlay} styles={styles} />
-      <CardLogo overlay={overlay} styles={styles} />
+      <CardSecondaryBody styles={styles} />
+      <CardLogo overlay={overlay} language={language} styles={styles} />
       <CardPrimaryBody overlay={overlay} language={language} styles={styles} />
       <CardStatus overlay={overlay} styles={styles} />
     </View>
@@ -325,7 +339,7 @@ function CredentialCard10({
   overlay?: OverlayBundle;
   language?: string;
 }) {
-  const styles = computedStyles(overlay);
+  const styles = computedStyles();
 
   return (
     <View style={[styles.container, { width }]}>

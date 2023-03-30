@@ -1,16 +1,19 @@
 import OverlayBundle from "../types/overlay/OverlayBundle";
 import { View, Image, ImageBackground, Text } from "react-native";
 import { textColorForBackground } from "../utils/color";
+import { useBranding } from "../contexts/Branding";
 
 const width = 360;
 const paddingHorizontal = 24;
 const paddingVertical = 16;
 const logoHeight = 80;
 
-function computedStyles(overlay?: OverlayBundle) {
+function computedStyles() {
+  const branding = useBranding();
+
   return {
     container: {
-      backgroundColor: overlay?.branding?.primaryBackgroundColor,
+      backgroundColor: branding?.primaryBackgroundColor,
       display: "flex",
     },
     primaryBodyContainer: {
@@ -20,10 +23,9 @@ function computedStyles(overlay?: OverlayBundle) {
     secondaryBodyContainer: {
       height: 1.5 * logoHeight,
       backgroundColor:
-        (overlay?.branding?.backgroundImage
+        (branding?.backgroundImage
           ? "rgba(0, 0, 0, 0)"
-          : overlay?.branding?.secondaryBackgroundColor) ??
-        "rgba(0, 0, 0, 0.24)",
+          : branding?.secondaryBackgroundColor) ?? "rgba(0, 0, 0, 0.24)",
     },
     logoContainer: {
       top: -0.5 * logoHeight,
@@ -38,9 +40,13 @@ function computedStyles(overlay?: OverlayBundle) {
     },
     textContainer: {
       color: textColorForBackground(
-        overlay?.branding?.primaryBackgroundColor ?? "#000000"
+        branding?.primaryBackgroundColor ?? "#000000"
       ),
       flexShrink: 1,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
     },
     label: {
       fontSize: 14,
@@ -59,47 +65,55 @@ function computedStyles(overlay?: OverlayBundle) {
 
 function DetailLogo({
   overlay,
+  language,
   styles,
 }: {
   overlay?: OverlayBundle | undefined;
+  language?: string;
   styles?: any;
 }) {
+  const branding = useBranding();
+
   return (
     <View style={styles.logoContainer}>
-      {
-        overlay?.branding?.logo ? (
-          <Image
-            source={overlay?.branding?.logo}
-            style={{
-              resizeMode: "cover",
-              width: logoHeight,
-              height: logoHeight,
-              borderRadius: 8,
-            }}
-          />
-        ) : null
-        // <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight }]}>
-        //   {(overlay.metaOverlay?.issuerName ?? overlay.metaOverlay?.name ?? "C")
-        //     ?.charAt(0)
-        //     .toUpperCase()}
-        // </Text>
-      }
+      {branding?.logo ? (
+        <Image
+          source={branding?.logo}
+          style={{
+            resizeMode: "cover",
+            width: logoHeight,
+            height: logoHeight,
+            borderRadius: 8,
+          }}
+        />
+      ) : (
+        <Text style={[styles.title, { fontSize: 0.5 * logoHeight }]}>
+          {(
+            overlay?.metadata?.issuer?.[language ?? "en"] ??
+            overlay?.metadata?.name?.[language || "en"] ??
+            "C"
+          )
+            ?.charAt(0)
+            .toUpperCase()}
+        </Text>
+      )}
     </View>
   );
 }
 
 function DetailSecondaryBody({
-  overlay,
   styles,
 }: {
   overlay?: OverlayBundle | undefined;
   styles?: any;
 }) {
+  const branding = useBranding();
+
   return (
-    <>
-      {overlay?.branding?.backgroundImage ? (
+    <View>
+      {branding?.backgroundImage ? (
         <ImageBackground
-          source={overlay?.branding?.backgroundImage}
+          source={branding?.backgroundImage}
           imageStyle={{
             resizeMode: "cover",
           }}
@@ -109,7 +123,7 @@ function DetailSecondaryBody({
       ) : (
         <View style={styles.secondaryBodyContainer} />
       )}
-    </>
+    </View>
   );
 }
 
@@ -167,8 +181,8 @@ function Detail({
 }) {
   return (
     <View style={styles.container}>
-      <DetailSecondaryBody overlay={overlay} styles={styles} />
-      <DetailLogo overlay={overlay} styles={styles} />
+      <DetailSecondaryBody styles={styles} />
+      <DetailLogo overlay={overlay} language={language} styles={styles} />
       <DetailPrimaryBody
         overlay={overlay}
         language={language}
@@ -185,7 +199,7 @@ function CredentialDetail10({
   overlay?: OverlayBundle;
   language: string;
 }) {
-  const styles = computedStyles(overlay);
+  const styles = computedStyles();
 
   return (
     <View style={[styles.container, { width }]}>
