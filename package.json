@@ -1,0 +1,25 @@
+{
+  "name": "@aries-bifold/oca",
+  "version": "1.0.0-alpha.0",
+  "description": "",
+  "main": "build/index",
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf ./build",
+    "compile": "tsc",
+    "prepublishOnly": "yarn run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git+https://github.com/hyperledger/aries-mobile-agent-react-native.git",
+  "author": "Akiff Manji",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
+  },
+  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
+  "devDependencies": {
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  },
+  "private": false
+}
